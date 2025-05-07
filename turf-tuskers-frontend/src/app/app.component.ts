@@ -6,7 +6,7 @@ import { AdminDashboardComponent } from "./components/admin-dashboard/admin-dash
 
 @Component({
   selector: 'app-root',
-  imports: [HomePageComponent, MatchDetailsComponent, AdminDashboardComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

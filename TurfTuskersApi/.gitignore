@@ -1,0 +1,17 @@
+# Ignore Visual Studio temporary files
+.vs/
+*.user
+*.suo
+
+# Ignore build output
+bin/
+obj/
+
+# Ignore .NET artifacts
+*.cache
+*.log
+*.dbmdl
+
+# Ignore Node modules
+node_modules/
+dist/
