@@ -1,0 +1,6 @@
+@turf_tuskers_backend_HostAddress = http://localhost:5111
+
+GET {{turf_tuskers_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
