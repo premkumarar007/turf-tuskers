@@ -1,62 +1,51 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TurfTuskersApi.Data;
-using TurfTuskersApi.Models;
+using turf_tuskers_backend.Services;
 
-namespace TurfTuskersApi.Controllers;
+namespace turf_tuskers_backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class PlayersController : ControllerBase
 {
-    private readonly CricketContext _context;
+    private readonly PlayerService _playerService;
 
-    public PlayersController(CricketContext context)
+    public PlayersController(PlayerService playerService)
     {
-        _context = context;
+        _playerService = playerService;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Player>>> GetAll()
     {
-        return await _context.Players.Include(p => p.Match).ToListAsync();
+        var players = await _playerService.GetAllAsync();
+        return Ok(players);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Player>> GetById(int id)
     {
-        var player = await _context.Players.Include(p => p.Match).FirstOrDefaultAsync(p => p.Id == id);
+        var player = await _playerService.GetByIdAsync(id);
         return player == null ? NotFound() : Ok(player);
     }
 
     [HttpPost]
     public async Task<ActionResult<Player>> Create(Player player)
     {
-        _context.Players.Add(player);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetById), new { id = player.Id }, player);
+        var created = await _playerService.CreateAsync(player);
+        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, Player player)
     {
-        if (id != player.Id) return BadRequest();
-
-        _context.Entry(player).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
-
-        return NoContent();
+        var result = await _playerService.UpdateAsync(id, player);
+        return result ? NoContent() : BadRequest();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var player = await _context.Players.FindAsync(id);
-        if (player == null) return NotFound();
-
-        _context.Players.Remove(player);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
+        var result = await _playerService.DeleteAsync(id);
+        return result ? NoContent() : NotFound();
     }
 }

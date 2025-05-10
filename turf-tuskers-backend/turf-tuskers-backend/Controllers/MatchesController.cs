@@ -1,62 +1,51 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TurfTuskersApi.Data;
-using TurfTuskersApi.Models;
+using turf_tuskers_backend.Services;
 
-namespace TurfTuskersApi.Controllers;
+namespace turf_tuskers_backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class MatchesController : ControllerBase
 {
-    private readonly CricketContext _context;
+    private readonly MatchService _matchService;
 
-    public MatchesController(CricketContext context)
+    public MatchesController(MatchService matchService)
     {
-        _context = context;
+        _matchService = matchService;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Match>>> GetAll()
     {
-        return await _context.Matches.Include(m => m.Players).ToListAsync();
+        var matches = await _matchService.GetAllAsync();
+        return Ok(matches);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Match>> GetById(int id)
     {
-        var match = await _context.Matches.Include(m => m.Players).FirstOrDefaultAsync(m => m.Id == id);
+        var match = await _matchService.GetByIdAsync(id);
         return match == null ? NotFound() : Ok(match);
     }
 
     [HttpPost]
     public async Task<ActionResult<Match>> Create(Match match)
     {
-        _context.Matches.Add(match);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetById), new { id = match.Id }, match);
+        var created = await _matchService.CreateAsync(match);
+        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, Match match)
     {
-        if (id != match.Id) return BadRequest();
-
-        _context.Entry(match).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
-
-        return NoContent();
+        var result = await _matchService.UpdateAsync(id, match);
+        return result ? NoContent() : BadRequest();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var match = await _context.Matches.FindAsync(id);
-        if (match == null) return NotFound();
-
-        _context.Matches.Remove(match);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
+        var result = await _matchService.DeleteAsync(id);
+        return result ? NoContent() : NotFound();
     }
 }

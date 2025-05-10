@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { MatchService, Match } from '../../services/match.service';
 import { MatchCardComponent } from '../match-card/match-card.component';
-import { CommonModule } from '@angular/common';
+import { sharedImports } from '../../shared/shared-imports';
 
 @Component({
   selector: 'app-home-page',
-  imports: [MatchCardComponent, CommonModule],
+  imports: [MatchCardComponent, sharedImports],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
@@ -18,7 +18,7 @@ export class HomePageComponent {
   }
 
   loadMatches() {
-    this.matchService.getMatches().subscribe((matches: Match[]) => {
+    this.matchService.getAll().subscribe((matches: Match[]) => {
       this.matches = matches;
     });
   }

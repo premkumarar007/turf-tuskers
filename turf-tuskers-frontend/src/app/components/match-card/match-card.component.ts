@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Match } from '../../services/match.service';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { sharedImports } from '../../shared/shared-imports';
 
 @Component({
   selector: 'app-match-card',
-  imports: [RouterModule, CommonModule],
+  imports: [sharedImports],
   templateUrl: './match-card.component.html',
   styleUrl: './match-card.component.scss'
 })
