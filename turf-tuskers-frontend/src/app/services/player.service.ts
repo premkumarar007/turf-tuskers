@@ -12,7 +12,7 @@ export interface Player {
 
 @Injectable({ providedIn: 'root' })
 export class PlayerService {
-  private apiUrl = 'https://localhost:5001/api/players';
+  private apiUrl = 'https://localhost:7227/api/players';
 
   constructor(private http: HttpClient) {}
 

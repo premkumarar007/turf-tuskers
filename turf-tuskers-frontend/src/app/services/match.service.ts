@@ -13,7 +13,7 @@ export interface Match {
 
 @Injectable({ providedIn: 'root' })
 export class MatchService {
-  private apiUrl = 'https://localhost:5001/api/matches';
+  private apiUrl = 'https://localhost:7227/api/matches';
 
   constructor(private http: HttpClient) {}
 

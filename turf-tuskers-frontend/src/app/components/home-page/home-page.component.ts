@@ -6,6 +6,7 @@ import { sharedImports } from '../../shared/shared-imports';
 @Component({
   selector: 'app-home-page',
   imports: [MatchCardComponent, sharedImports],
+  providers: [MatchService],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })

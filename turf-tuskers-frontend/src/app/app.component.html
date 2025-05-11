@@ -1,13 +1,7 @@
-<div class="min-h-screen flex flex-col">
-    <header class="bg-blue-800 text-white p-4 shadow">
-      <h1 class="text-xl font-bold">🏏 Cricket Play</h1>
-    </header>
-  
-    <main class="flex-1 p-4">
-      <router-outlet></router-outlet>
-    </main>
-  
-    <footer class="bg-gray-100 text-center p-2 text-sm text-gray-600">
-      &copy; 2025 Cricket Play App
-    </footer>
-  </div>
+<app-navbar></app-navbar>
+<main class="p-4">
+  <router-outlet />
+</main>
+<footer class="bg-gray-100 text-center text-xs p-2 text-gray-500">
+  &copy; 2025 Turf Tuskers
+</footer>

@@ -1,9 +1,25 @@
+<h2 class="text-xl font-bold mb-4">Match Management</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+  <input type="text" placeholder="Team A" [(ngModel)]="newMatch.teamA" class="border p-2 rounded">
+  <input type="text" placeholder="Team B" [(ngModel)]="newMatch.teamB" class="border p-2 rounded">
+  <input type="date" [(ngModel)]="newMatch.matchDate" class="border p-2 rounded">
+  <input type="text" placeholder="Venue" [(ngModel)]="newMatch.venue" class="border p-2 rounded">
+  <select [(ngModel)]="newMatch.status" class="border p-2 rounded">
+    <option>Upcoming</option>
+    <option>Ongoing</option>
+    <option>Completed</option>
+  </select>
+  <button (click)="addMatch()" class="bg-green-600 text-white px-4 py-2 rounded">Add Match</button>
+</div>
+
 <h2 class="text-xl font-bold mb-4">Player Management</h2>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
   <input type="text" placeholder="Name" [(ngModel)]="newPlayer.name" class="border p-2 rounded">
   <input type="text" placeholder="Team" [(ngModel)]="newPlayer.team" class="border p-2 rounded">
   <input type="text" placeholder="Role" [(ngModel)]="newPlayer.role" class="border p-2 rounded">
-  <input type="number" placeholder="Match ID" [(ngModel)]="newPlayer.matchId" class="border p-2 rounded">
+  <select [(ngModel)]="newPlayer.matchId" class="border p-2 rounded">
+    <option *ngFor="let match of matches" [value]="match.id">{{ match.teamA }} vs {{ match.teamB }}</option>
+  </select>
   <button (click)="addPlayer()" class="bg-blue-600 text-white px-4 py-2 rounded">Add Player</button>
 </div>
 
